@@ -1,10 +1,10 @@
-#Coucou Julie!
-#ici on peut mettre notre code
-#je copie le code de l'énoncé
+# Coucou Julie!
+# ici on peut mettre notre code
+# je copie le code de l'énoncé
 
 import numpy as np 
 import matplotlib.pyplot as plt
-#%matplotlib inline 
+# %matplotlib inline 
 plt.rcParams["figure.figsize"] = (3,3)
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import solve_ivp
