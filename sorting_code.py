@@ -2,9 +2,7 @@
 def bubble_sort(L):
     for i in range(len(L)-1):
         if L[i]>L[i+1]:
-            l = L[i]
-            L[i] = L[i+1]
-            L[i+1] = l
+            L[i], L[i+1]=L[i+1],L[i]
     return L
 
 #heap sort
@@ -21,8 +19,10 @@ def heap_sort(L):
     nb=len(L)
     end=nb
     heapify(L)
-    while end>1:
+    while end>0:
         end=end-1
         L[end],L[0]=L[0],L[end]
         heapify(L)
     return L
+
+print(heap_sort(["b","ab"]))
