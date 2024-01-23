@@ -17,6 +17,7 @@ def read_args():
     parser.add_argument('-i', help='Path for input file.')
     parser.add_argument('-s', help='Run as server', action='store_true')
     parser.add_argument('-p', help='The port.', default=34000)
+    parser.add_argument('--host',default="localhost")
     # Parse arguments
     args = parser.parse_args()
 
@@ -38,7 +39,7 @@ def run_as_client():
     # create an INET, STREAMing socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # now connect to the web server on port 80 - the normal http port
-    server = ("localhost", args.p)
+    server = (args.host, args.p)
     s.connect(server)
     sent = s.send(HANDSHAKE_MSG)
     if sent == 0 :
