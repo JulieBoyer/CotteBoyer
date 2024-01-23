@@ -21,16 +21,20 @@ def read_args():
     args = parser.parse_args()
 
     # Enable debug
-    if args.debug:
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.DEBUG)
-        logger.debug("Number of clients : " + args.nc)
-        logger.debug("Status : " + args.nc)
-        logger.debug("Port : " + args.p)
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.debug("Number of clients : " +str( args.nc))
+    if args.s:
+        logger.debug("Status : server" )
+    else:
+        logger.debug("Status : client")
+    logger.debug("Port : " + str(args.p))
     return args
 
+args = read_args()
+
 def run_as_client():
-    args = read_args()
+    
     # create an INET, STREAMing socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # now connect to the web server on port 80 - the normal http port
@@ -42,15 +46,19 @@ def run_as_client():
     reply = s.recv(len(HANDSHAKE_REPLY))
     if reply != HANDSHAKE_REPLY:
         raise RuntimeError("bad hanshake")
-    words = received_words(s, src ="server")
-    inplace_merge_sort(words,0,len(words))
+    
 
-
+def run_as_server():
     # create an INET, STREAMing socket
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # bind the socket to a public host, and a well-known port
     serversocket.bind(("", args.p))
     # become a server socket
     serversocket.listen()
+    (client_socket,addr)=serversocket.accept()
+    text=client_socket.recv(len(HANDSHAKE_MSG))
 
-run_as_client()
+if args.s:
+    run_as_server()
+else:
+    run_as_client()
