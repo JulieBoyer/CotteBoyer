@@ -46,6 +46,7 @@ def run_as_client():
     reply = s.recv(len(HANDSHAKE_REPLY))
     if reply != HANDSHAKE_REPLY:
         raise RuntimeError("bad hanshake")
+    print(reply)
     
 
 def run_as_server():
@@ -57,6 +58,8 @@ def run_as_server():
     serversocket.listen()
     (client_socket,addr)=serversocket.accept()
     text=client_socket.recv(len(HANDSHAKE_MSG))
+    client_socket.send(HANDSHAKE_REPLY)
+    print(text)
 
 if args.s:
     run_as_server()
