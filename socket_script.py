@@ -1,6 +1,9 @@
 import logging
 import argparse
 import socket
+import mpi4py as MPI
+import sys
+import time
 
 HANDSHAKE_MSG = b"Hello"
 HANDSHAKE_REPLY = b"Hi"
@@ -33,6 +36,10 @@ def read_args():
     return args
 
 args = read_args()
+comm=MPI.COMM_WORLD
+
+rank=comm.Get_rank()
+size=comm.Get_size()
 
 def run_as_client():
     
